@@ -1,17 +1,24 @@
 import React, { useEffect, useState } from 'react'
+
 import "./Landingpage1.css"
 import image from "./MyImage.jpg"
 import axios from 'axios'
 import Loading from '../../components/Loading'
 import ErrorMessage from '../../components/ErrorMessage'
+import { useDispatch, useSelector } from 'react-redux'
+import { login, register} from '../../actions/userActions'
+import { useNavigate } from 'react-router-dom';
 
 
-export default function Landingpage() {
+
+export default function Landingpage({history=[]}) {
+	
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("");
-	const [error, setError] = useState(false)
-	const [loading, setLoading] = useState(false)
+	// const [error, setError] = useState(false)
+	// const [loading, setLoading] = useState(false)
 
+	
 	const [registeremail, setRegisterEmail] = useState("")
 	const [name, setName] = useState(" ");
 	const [regpassword, setRegPassword] = useState(" ");
@@ -21,46 +28,75 @@ export default function Landingpage() {
 	const [pic, setPic] = useState("mypiv")
 	const [Regloading, setRegLoading] = useState(false)
 
+	
+	
+	
+	
+	
+	const navigate = useNavigate();
+	
+	const dispatch = useDispatch();
 
-	// useEffect(()=>{
-	// 	const userInfo = localStorage.getItem("userInfo");
+	const userLogin = useSelector((state) => state.userLogin);
+	const { loading, error, userInfo } = userLogin;
 
-	// 	if(userInfo){
-	// 		history.push("/mynotes")
-	// 	}
-	// },[history])
+	const userRegister = useSelector((state) => state.userRegister);
+	const { loading1, error1, userInfo1 } = userRegister;
 
+	useEffect(() => {
+		if (userInfo) {
+			try{
+				console.log(userInfo)
+				history.push("/mynotes");
+				navigate("/mynotes");
+				console.log(history)
+			}
+			catch(err)
+			{
+				console.log(err)
+			}
+			
+		}
+		if(userInfo1)
+		{
+			history.push("/mynotes");
+			navigate("/mynotes");
+		}
+
+	}, [history, userInfo,userInfo1]);
+	
 	const submitHandler = async (e) => {
 		e.preventDefault()
-		try {
-			const config = {
-				headers: {
-					"Content-type": "application/json"
-				}
-			}
 
-			setLoading(true)
-			const { data } = await axios.post(
-				"/api/users/login",
-				{
-					email,
-					password,
-				},
-				config
-			);
+		dispatch(login(email,password))
+		// try {
+		// 	const config = {
+		// 		headers: {
+		// 			"Content-type": "application/json"
+		// 		}
+		// 	}
 
-			// console.log(data)
-			localStorage.setItem('userInfo', JSON.stringify(data));
-			setLoading(false)
+		// 	setLoading(true)
+		// 	const { data } = await axios.post(
+		// 		"/api/users/login",
+		// 		{
+		// 			email,
+		// 			password,
+		// 		},
+		// 		config
+		// 	);
 
-		}
-		catch (error) {
-			setError(error.response.data.message)
-			// console.log(error)
-			// error = true;
+		// 	// console.log(data)
+		// 	localStorage.setItem('userInfo', JSON.stringify(data));
+		// 	setLoading(false)
+
+		// }
+		// catch (error) {
+		// 	setError(error.response.data.message)
+		// 	// console.log(error)
+		// 	// error = true;
 			
-
-		}
+		// }
 	};
 
 
@@ -69,38 +105,43 @@ export default function Landingpage() {
 		if (password !== registercPass) {
 			setMessage('Password do not match')
 		}
-		else {
-			setMessage(null);
-			try {
-				const config = {
-					headers: {
-						"Content-type": "application/json",
-					}
-				}
-				console.log(name,pic,registeremail,regpassword)
-				setRegLoading(true)
-				const { data } = await axios.post(
-					"/api/users",
-					{
-						name,
-						email,
-						password,
-						pic
-					},
-					config
-				);
+		// else {
+		// 	setMessage(null);
+		// 	try {
+		// 		const config = {
+		// 			headers: {
+		// 				"Content-type": "application/json",
+		// 			}
+		// 		}
+		// 		console.log(name,pic,registeremail,regpassword)
+		// 		setRegLoading(true)
+		// 		const { data } = await axios.post(
+		// 			"/api/users",
+		// 			{
+		// 				name,
+		// 				email,
+		// 				password,
+		// 				pic
+		// 			},
+		// 			config
+		// 		);
 
-				console.log(data)
-				// localStorage.setItem('userInfo', JSON.stringify(data));
-				setRegLoading(false)
-			}
-			catch (error) {
-				console.log(error.response.data);
-				// setRegError(Regerror.response.data.message);
+		// 		console.log(data)
+		// 		// localStorage.setItem('userInfo', JSON.stringify(data));
+		// 		setRegLoading(false)
+		// 	}
+		// 	catch (error) {
+		// 		console.log(error.response.data);
+		// 		// setRegError(Regerror.response.data.message);
 				
-			}
-
+		// 	}
+		// }
+		else
+		{
+			dispatch(register(name,email,password,pic))
 		}
+
+
 	};
 
 	return (
@@ -134,7 +175,7 @@ export default function Landingpage() {
 							<div className="title">Login</div>
 							{error && <ErrorMessage variant='danger'>{error}</ErrorMessage>}
 							{loading && <Loading />}
-							<form action='/login' onSubmit={submitHandler}>
+							<form action='/mynotes' onSubmit={submitHandler}>
 								<div className="input-boxes">
 									<div className="input-box">
 										<i className="fas fa-envelope"></i>

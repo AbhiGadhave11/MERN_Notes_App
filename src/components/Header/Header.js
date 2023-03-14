@@ -1,10 +1,23 @@
 // import {Button,Form,Nav,NavDropdown} from 'react-bootstrap'
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {Link,useNavigate} from 'react-router-dom'
+import { logout } from '../../actions/userActions';
 
 export default function Header() {
   
   const history = useNavigate();
+
+  const dispatch = useDispatch()
+
+  const userLogin = useSelector(state => state.userLogin)
+
+  const {userInfo}  = userLogin;
+
+  const logoutHandler = () => {
+    dispatch(logout())
+    history("/")
+  }
 
   return (
     <div style={{margin:"0px 10px",padding:"0px"}}>
@@ -40,11 +53,8 @@ export default function Header() {
           
             <ul className="dropdown-menu">
               <li><a className="dropdown-item" href="/">My Profile</a></li>
-              <li><a className="dropdown-item" href = '/'  
-                onClick={()=>{
-                  localStorage.removeItem("userInfo");
-                  history.push("/")
-                }}>Logout</a></li>
+              <li><a className="dropdown-item"  
+                onClick={logoutHandler}>Logout</a></li>
               <li><hr className="dropdown-divider"/></li>
             </ul>
           

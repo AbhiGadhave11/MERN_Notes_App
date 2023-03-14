@@ -20,7 +20,7 @@ function CustomToggle({ children, eventKey }) {
     );
   }
 
-export default function MyNotes() {
+export default function MyNotes({history}) {
 
         const [notes,setNotes] = useState([])
         const deleteHandler = (id) => {
@@ -34,7 +34,6 @@ export default function MyNotes() {
             // console.log(data)
             setNotes(data)
         }
-        console.log(notes)
 
         useEffect(()=>{
             fetchNotes();
@@ -42,6 +41,7 @@ export default function MyNotes() {
 
         return (
             <MainScreen title='Welcome Back Abhijit Gadhave ...'>
+    
                 <Link to='createnote'>
                     <button style={{ marginLeft: 10, marginBottom: 6 }}>
                         create New Note

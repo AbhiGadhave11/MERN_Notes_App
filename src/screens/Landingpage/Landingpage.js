@@ -25,7 +25,7 @@ export default function Landingpage({history=[]}) {
 	const [registercPass, setRegistercPass] = useState("")
 	const [Regerror, setRegError] = useState(false)
 	const [Message, setMessage] = useState(null)
-	const [pic, setPic] = useState("mypiv")
+	const [pic, setPic] = useState("mypic")
 	const [Regloading, setRegLoading] = useState(false)
 
 	

@@ -3,6 +3,8 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import {Link,useNavigate} from 'react-router-dom'
 import { logout } from '../../actions/userActions';
+import Dropdown from 'react-bootstrap/Dropdown';
+import DropdownButton from 'react-bootstrap/DropdownButton';
 
 export default function Header() {
   
@@ -46,19 +48,27 @@ export default function Header() {
               </a>
           </li>
         
-        <li className="nav-item dropdown">
-          <a className="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Abhijit Gadhave
+        {userInfo ? <li className="nav-item dropdown">
+          <a className="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+          Your Profile
           </a>
           
             <ul className="dropdown-menu">
-              <li><a className="dropdown-item" href="/">My Profile</a></li>
+              <li><a className="dropdown-item" href="/profile">My Profile</a></li>
               <li><a className="dropdown-item"  
                 onClick={logoutHandler}>Logout</a></li>
               <li><hr className="dropdown-divider"/></li>
             </ul>
           
-        </li>
+        </li>: 
+        <a className="nav-link dropdown-toggle" href="/" role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+          Login
+          </a>}
+        {/* <DropdownButton title="Your Profile" id="dropdown-basic-button" >
+      <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+      <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+      <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+    </DropdownButton> */}
         
       </ul>
     

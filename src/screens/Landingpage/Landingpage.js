@@ -6,19 +6,18 @@ import axios from 'axios'
 import Loading from '../../components/Loading'
 import ErrorMessage from '../../components/ErrorMessage'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, register} from '../../actions/userActions'
+import { login, register } from '../../actions/userActions'
 import { useNavigate } from 'react-router-dom';
 
 
+export default function Landingpage({ history = [] }) {
 
-export default function Landingpage({history=[]}) {
-	
 	const [email, setEmail] = useState("")
 	const [password, setPassword] = useState("");
 	// const [error, setError] = useState(false)
 	// const [loading, setLoading] = useState(false)
 
-	
+
 	const [registeremail, setRegisterEmail] = useState("")
 	const [name, setName] = useState(" ");
 	const [regpassword, setRegPassword] = useState(" ");
@@ -28,13 +27,13 @@ export default function Landingpage({history=[]}) {
 	const [pic, setPic] = useState("mypic")
 	const [Regloading, setRegLoading] = useState(false)
 
-	
-	
-	
-	
-	
+
+
+
+
+
 	const navigate = useNavigate();
-	
+
 	const dispatch = useDispatch();
 
 	const userLogin = useSelector((state) => state.userLogin);
@@ -45,30 +44,28 @@ export default function Landingpage({history=[]}) {
 
 	useEffect(() => {
 		if (userInfo) {
-			try{
+			try {
 				console.log(userInfo)
 				history.push("/mynotes");
 				navigate("/mynotes");
 				console.log(history)
 			}
-			catch(err)
-			{
+			catch (err) {
 				console.log(err)
 			}
-			
+
 		}
-		if(userInfo1)
-		{
+		if (userInfo1) {
 			history.push("/mynotes");
 			navigate("/mynotes");
 		}
 
-	}, [history, userInfo,userInfo1]);
-	
+	}, [history, userInfo, userInfo1]);
+
 	const submitHandler = async (e) => {
 		e.preventDefault()
 
-		dispatch(login(email,password))
+		dispatch(login(email, password))
 		// try {
 		// 	const config = {
 		// 		headers: {
@@ -95,7 +92,7 @@ export default function Landingpage({history=[]}) {
 		// 	setError(error.response.data.message)
 		// 	// console.log(error)
 		// 	// error = true;
-			
+
 		// }
 	};
 
@@ -133,12 +130,11 @@ export default function Landingpage({history=[]}) {
 		// 	catch (error) {
 		// 		console.log(error.response.data);
 		// 		// setRegError(Regerror.response.data.message);
-				
+
 		// 	}
 		// }
-		else
-		{
-			dispatch(register(name,email,password,pic))
+		else {
+			dispatch(register(name, email, password, pic))
 		}
 
 
@@ -204,22 +200,22 @@ export default function Landingpage({history=[]}) {
 								<div className="input-boxes">
 									<div className="input-box">
 										<i className="fas fa-user"></i>
-										<input type="text" placeholder="Enter your name" value={name} required 
+										<input type="text" placeholder="Enter your name" value={name} required
 											onChange={(e) => setName(e.target.value)} />
 									</div>
 									<div className="input-box">
 										<i className="fas fa-envelope"></i>
-										<input type="text" value={email} placeholder="Enter your email"  required
+										<input type="text" value={email} placeholder="Enter your email" required
 											onChange={(e) => setEmail(e.target.value)} />
 									</div>
 									<div className="input-box">
 										<i className="fas fa-lock"></i>
-										<input type="password" value={password} placeholder="Enter your Password"  required
+										<input type="password" value={password} placeholder="Enter your Password" required
 											onChange={(e) => setPassword(e.target.value)} />
 									</div>
 									<div className="input-box">
 										<i className="fas fa-lock"></i>
-										<input type="password" value={registercPass} placeholder="Confirm Password"  required
+										<input type="password" value={registercPass} placeholder="Confirm Password" required
 											onChange={(e) => setRegistercPass(e.target.value)} />
 									</div>
 									<div className="button input-box">

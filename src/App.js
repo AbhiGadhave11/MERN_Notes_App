@@ -7,6 +7,7 @@ import LoginScreen from './screens/LoginScreen/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen/RegisterScreen';
 import CreateNote from './screens/CreateNote/CreateNote';
 import SingleNote from './screens/SingleNote/SingleNote';
+import ProfileScreen from './screens/ProfileScreen/ProfileScreen';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Landingpage/>} exact />
           <Route path='/login' element={<LoginScreen/>} />
+          <Route path='/profile' element={<ProfileScreen/>} />
           <Route path='/createnote' element={<CreateNote/>} />
           <Route path='/note/:id' element={<SingleNote/>} />
           <Route path="/mynotes" element={<MyNotes/>} />
